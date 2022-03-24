@@ -37,7 +37,7 @@ const QuoteDetail = () => {
   }
   return (
     <>
-      <div>
+      <div className="">
         <p>{loadedQuote.text}</p>
         <p>{loadedQuote.author}</p>
       </div>
