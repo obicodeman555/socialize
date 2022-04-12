@@ -10,7 +10,11 @@
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
+<<<<<<< HEAD
     "sass": "^1.50.0",
+=======
+    "sass": "^1.49.9",
+>>>>>>> f9f67a02b225c1fc99d7b1c95c2ff53e5d7c2c01
     "web-vitals": "^2.1.4"
   },
   "scripts": {
