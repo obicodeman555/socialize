@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useParams, Outlet } from "react-router-dom";
-
+import "./quoteDetails.scss";
 import useHttp from "../hooks/useHttp";
 import { getSingleQuote } from "../lib/api";
+import Loading from "../components/loading/Loading";
 
 const QuoteDetail = () => {
   const params = useParams();
@@ -24,7 +25,7 @@ const QuoteDetail = () => {
 
   //show loader for pending status
   if (status === "pending") {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (error) {
@@ -37,9 +38,9 @@ const QuoteDetail = () => {
   }
   return (
     <>
-      <div>
-        <p>{loadedQuote.text}</p>
-        <p>{loadedQuote.author}</p>
+      <div className="single__quote">
+        <span>{loadedQuote.text}</span>
+        <span>{loadedQuote.author}</span>
       </div>
       <Outlet />
     </>

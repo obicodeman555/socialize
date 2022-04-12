@@ -1,0 +1,10 @@
+.single__quote {
+  background-color: #777;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+
+  span:first-child {
+    margin-bottom: 1rem;
+  }
+}

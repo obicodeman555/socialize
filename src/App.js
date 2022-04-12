@@ -1,9 +1,10 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useContext } from "react";
 import { Route, Routes, Link } from "react-router-dom";
-import NewPasswordForm from "./components/new-password-form/NewPasswordForm";
+// import NewPasswordForm from "./components/new-password-form/NewPasswordForm";
 import Layout from "./components/layout/Layout";
 import Comments from "./components/comments/Comments";
-
+import Loading from "./components/loading/Loading";
+import AuthContext from "./store/auth-context";
 const Quotes = React.lazy(() => import("./pages/Quotes"));
 const NewQuote = React.lazy(() => import("./pages/NewQuote"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
@@ -13,19 +14,17 @@ const AuthPage = React.lazy(() => import("./pages/authpage/AuthPage"));
 const ProfilePage = React.lazy(() => import("./pages/profile/Profile"));
 
 export default function App() {
+  const authCtx = useContext(AuthContext);
+
   return (
     <div className="App">
       <Layout>
-        <Suspense
-          fallback={
-            <div>
-              <h1>Loading...</h1>
-            </div>
-          }
-        >
+        <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<HomePage />} exact />
-            <Route path="/auth" element={<AuthPage />} />
+            {!authCtx.isLoggedIn && (
+              <Route path="/auth" element={<AuthPage />} />
+            )}
 
             <Route path="/quotes" element={<Quotes />} />
             {/*One to many route linking 
@@ -45,17 +44,14 @@ export default function App() {
             </Route>
 
             <Route path="/new-quote" element={<NewQuote />} />
-            <Route path="/profile" element={<ProfilePage />}>
-              <Route
-                path=""
-                element={
-                  <div>
-                    <Link to="change-password">Change Password</Link>
-                  </div>
-                }
-              />
-              <Route path="change-password" element={<NewPasswordForm />} />
-            </Route>
+            <Route
+              path="/settings"
+              element={
+                (authCtx.isLoggedIn && <ProfilePage />) ||
+                (!authCtx.isLoggedIn && <AuthPage />)
+              }
+            />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
